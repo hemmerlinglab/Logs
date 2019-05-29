@@ -3,10 +3,10 @@ import os
 import datetime
 import time
 
-serial_port = 'COM14';
+serial_port = '/dev/ArduinoChill';
 baud_rate = 9600; #In arduino, Serial.begin(baud_rate)
     
-log_file_path = 'Z:\\PulseTube_Chilled_Water\\'
+log_file_path = '/home/lab-42/skynet/Logs/PulseTube_Chilled_Water/'
 
 #output_file = open(write_to_file_path, "w+");
 try:
@@ -20,8 +20,28 @@ except:
     
 #while True:
 if True:
-    line = ser.readline();
-    line = line.decode("utf-8") #ser.readline returns a binary, convert to string
+    reading = True
+    line = ''
+    while reading == True:
+        #print(line)
+        if '\r\n' not in line:
+            raw_line = ser.readline();
+            new_line = raw_line.decode("utf-8") #ser.readline returns a binary, convert to string
+            line += new_line
+        else:
+            keys = [',temp,',',flow,',',pressure,',',hornet_pressure,',',UCR_in,',',UCR_out']
+
+            keycheck = 0
+            for key in keys:
+                if key in line:
+                    keycheck += 1
+
+            #print('keycheck:',keycheck)
+            if keycheck == len(keys)-1:
+                reading = False
+            else:
+                line = ''
+    
     
     #print(line);
 
@@ -40,7 +60,7 @@ if True:
     curr_time = str(my_today.strftime('%Y/%m/%d-%H:%M:%S'))
     hlp = curr_time + ","
             
-    hlp += str(line)
+    hlp += line
     #hlp = hlp[:-1] # delete last comma
     
     print (hlp)            
