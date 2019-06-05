@@ -9,6 +9,7 @@ void setup() {
   pinMode(A3,INPUT);
   pinMode(A10,INPUT);
   pinMode(A11,INPUT);
+  pinMode(2,INPUT);
   analogReadResolution(12);
   
 }
@@ -21,32 +22,33 @@ void loop() {
   delay(5);
   V_temp = analogRead(A0);
   delay(100);
-  int V_flow = analogRead(A1);
-  delay(5);
-  V_flow = analogRead(A1);
-  delay(100);
   int V_pressure = analogRead(A2);
   delay(5);
   V_pressure = analogRead(A2);
-  delay(100);
+  long flow1 = pulseIn(2,HIGH,2000000);
   int V_hornet_pressure = analogRead(A3);
   delay(5);
   V_hornet_pressure = analogRead(A3);
-  delay(100);
+  long flow2 = pulseIn(2,HIGH,2000000);
   int V_UCR_in = analogRead(A11);
   delay(5);
   V_UCR_in = analogRead(A11);
-  delay(100);
+  long flow3 = pulseIn(2,HIGH,2000000);
   int V_UCR_out = analogRead(A10);
   delay(5);
   V_UCR_out = analogRead(A10);
+
+  float prd = 2*(max(flow1,max(flow2,flow3)));
+  if(prd<0.01){
+    prd = 66000.0;
+  };
 
   //Convert the analog reading (which goes from 0 - 1023) to a voltage (0 - 5V):
 
   // Conversion could be wrong: 0.13 V corresponds to 1.3 lpm and 1.95 V correspond to 25.3 grad
   float res = 4095.0;
   float Vmax = 3.3;
-  float flow = V_flow * (Vmax / res); // * 14.0/5.0 + 1.0;  
+  float flow = prd; // * 14.0/5.0 + 1.0;  
   float temp = V_temp * (Vmax / res); // * 120.0/5.0 * 0.5;  
   float pressure =  V_pressure * (Vmax / res) * 1.25;
   float hornet_pressure =  V_hornet_pressure * (Vmax / res) * 3.3212;
