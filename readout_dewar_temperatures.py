@@ -3,10 +3,11 @@ import os
 import datetime
 import time
 
-serial_port = 'COM1';
+serial_port = '/dev/Lakeshore';
 baud_rate = 9600; #In arduino, Serial.begin(baud_rate)
     
-log_file_path = 'Z:\\Dewar_Temperatures\\'
+#log_file_path = 'Z:\\Dewar_Temperatures\\'
+log_file_path = '/home/lab-42/skynet/Logs/PulseTube_Chilled_Water/'
 
 #output_file = open(write_to_file_path, "w+");
 try:
