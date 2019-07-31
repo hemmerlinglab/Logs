@@ -29,7 +29,7 @@ if True:
             new_line = raw_line.decode("utf-8") #ser.readline returns a binary, convert to string
             line += new_line
         else:
-            keys = [',temp,',',flow,',',pressure,',',hornet_pressure,',',UCR_in,',',UCR_out']
+            keys = [',temp,',',flow,',',pressure,',',hornet_pressure,',',UCR_in,',',UCR_out','uhv']
 
             keycheck = 0
             for key in keys:

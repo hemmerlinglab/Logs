@@ -7,6 +7,7 @@ void setup() {
   pinMode(A1,INPUT);
   pinMode(A2,INPUT);
   pinMode(A3,INPUT);
+  pinMode(A5,INPUT);
   pinMode(A10,INPUT);
   pinMode(A11,INPUT);
   pinMode(2,INPUT);
@@ -37,6 +38,11 @@ void loop() {
   int V_UCR_out = analogRead(A10);
   delay(5);
   V_UCR_out = analogRead(A10);
+  delay(100);
+  int UHV_pressure = analogRead(A5);
+  delay(5);
+  UHV_pressure = analogRead(A5);
+  
 
   float prd = 2*(max(flow1,max(flow2,flow3)));
   if(prd<0.01){
@@ -50,15 +56,16 @@ void loop() {
   float Vmax = 3.3;
   float flow = prd; // * 14.0/5.0 + 1.0;  
   float temp = V_temp * (Vmax / res); // * 120.0/5.0 * 0.5;  
-  float pressure =  V_pressure * (Vmax / res) * 1.25;
-  float hornet_pressure =  V_hornet_pressure * (Vmax / res) * 3.3212;
+  float pressure =  V_pressure * (Vmax / res) * 5.82;
+  float hornet_pressure =  V_hornet_pressure * (Vmax / res) * 5.58;
   float V_in = V_UCR_in*(Vmax/res);
   float V_out = V_UCR_out*(Vmax/res);
+  float uhv = UHV_pressure*(Vmax/res)*5.0;
   
   //print out the value you need:
   //Serial.print(hour());
 
-  String mess = "temp,"+String(temp)+",flow,"+String(flow)+",pressure,"+String(pressure)+",hornet_pressure,"+String(hornet_pressure)+",UCR_in,"+String(V_in)+",UCR_out,"+String(V_out);
+  String mess = "temp,"+String(temp)+",flow,"+String(flow)+",pressure,"+String(pressure)+",hornet_pressure,"+String(hornet_pressure)+",UCR_in,"+String(V_in)+",UCR_out,"+String(V_out)+",uhv,"+String(uhv);
   //Serial.print("temp,");
   //Serial.print(temp);
   //Serial.print(",flow,");
