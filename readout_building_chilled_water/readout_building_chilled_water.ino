@@ -7,10 +7,11 @@ void setup() {
   pinMode(A1,INPUT);
   pinMode(A2,INPUT);
   pinMode(A3,INPUT);
+  pinMode(A4,INPUT);
   pinMode(A5,INPUT);
-  pinMode(A10,INPUT);
-  pinMode(A11,INPUT);
-  pinMode(2,INPUT);
+  pinMode(A6,INPUT);
+  pinMode(A7,INPUT);
+  pinMode(3,INPUT);
   analogReadResolution(12);
   
 }
@@ -22,26 +23,30 @@ void loop() {
   int V_temp = analogRead(A0);
   delay(5);
   V_temp = analogRead(A0);
-  delay(100);
-  int V_pressure = analogRead(A2);
+  delay(10);
+  int V_pressure_p = analogRead(A2);
   delay(5);
-  V_pressure = analogRead(A2);
-  long flow1 = pulseIn(2,HIGH,2000000);
+  V_pressure_p = analogRead(A2);
+  delay(10);
+  int V_pressure_m = analogRead(A5);
+  delay(5);
+  V_pressure_m = analogRead(A5);
+  long flow1 = pulseIn(3,HIGH,2000000);
   int V_hornet_pressure = analogRead(A3);
   delay(5);
   V_hornet_pressure = analogRead(A3);
-  long flow2 = pulseIn(2,HIGH,2000000);
-  int V_UCR_in = analogRead(A11);
+  long flow2 = pulseIn(3,HIGH,2000000);
+  int V_UCR_in = analogRead(A7);
   delay(5);
-  V_UCR_in = analogRead(A11);
-  long flow3 = pulseIn(2,HIGH,2000000);
-  int V_UCR_out = analogRead(A10);
+  V_UCR_in = analogRead(A7);
+  long flow3 = pulseIn(3,HIGH,2000000);
+  int V_UCR_out = analogRead(A6);
   delay(5);
-  V_UCR_out = analogRead(A10);
-  delay(100);
-  int UHV_pressure = analogRead(A5);
+  V_UCR_out = analogRead(A6);
+  delay(10);
+  int UHV_pressure = analogRead(A4);
   delay(5);
-  UHV_pressure = analogRead(A5);
+  UHV_pressure = analogRead(A4);
   
 
   float prd = 2*(max(flow1,max(flow2,flow3)));
@@ -56,11 +61,11 @@ void loop() {
   float Vmax = 3.3;
   float flow = prd; // * 14.0/5.0 + 1.0;  
   float temp = V_temp * (Vmax / res); // * 120.0/5.0 * 0.5;  
-  float pressure =  V_pressure * (Vmax / res) * 5.82;
-  float hornet_pressure =  V_hornet_pressure * (Vmax / res) * 5.58;
+  float pressure =  (V_pressure_p - V_pressure_m) * (Vmax / res) * 3.0;
+  float hornet_pressure =  V_hornet_pressure * (Vmax / res) * 3.0;
   float V_in = V_UCR_in*(Vmax/res);
   float V_out = V_UCR_out*(Vmax/res);
-  float uhv = UHV_pressure*(Vmax/res)*5.0;
+  float uhv = UHV_pressure*(Vmax/res)*3.0;
   
   //print out the value you need:
   //Serial.print(hour());
@@ -76,5 +81,5 @@ void loop() {
   //Serial.println(hornet_pressure);
   Serial.println(mess);
   //Serial.flush();
-  delay(100);
+  delay(500);
   }
