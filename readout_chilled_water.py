@@ -3,7 +3,8 @@ import os
 import datetime
 import time
 
-serial_port = '/dev/ArduinoChill';
+#serial_port = '/dev/ArduinoChill';
+serial_port = '/dev/ttyACM0'
 baud_rate = 9600; #In arduino, Serial.begin(baud_rate)
     
 log_file_path = '/home/lab-42/skynet/Logs/PulseTube_Chilled_Water/'

@@ -36,13 +36,13 @@ void loop() {
   delay(5);
   V_hornet_pressure = analogRead(A3);
   long flow2 = pulseIn(3,HIGH,2000000);
-  int V_UCR_in = analogRead(A7);
+  int V_UCR_in = analogRead(A6);
   delay(5);
-  V_UCR_in = analogRead(A7);
+  V_UCR_in = analogRead(A6);
   long flow3 = pulseIn(3,HIGH,2000000);
-  int V_UCR_out = analogRead(A6);
+  int V_UCR_out = analogRead(A7);
   delay(5);
-  V_UCR_out = analogRead(A6);
+  V_UCR_out = analogRead(A7);
   delay(10);
   int UHV_pressure = analogRead(A4);
   delay(5);
