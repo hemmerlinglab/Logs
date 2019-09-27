@@ -3,7 +3,8 @@ import os
 import datetime
 import time
 
-serial_port = '/dev/Lakeshore';
+#serial_port = '/dev/Lakeshore';
+serial_port = '/dev/ttyUSB0'
 baud_rate = 9600; #In arduino, Serial.begin(baud_rate)
     
 #log_file_path = 'Z:\\Dewar_Temperatures\\'
